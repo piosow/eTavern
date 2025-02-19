@@ -36,16 +36,24 @@ enum Role {
 }
 
 model Order {
-  id         String    @id @default(uuid())
+  id         String      @id @default(uuid())
   tableId    Int
-  items      Json
   totalPrice Float
-  status     Status    @default(PENDING)
-  createdAt  DateTime  @default(now())
+  status     Status      @default(PENDING)
+  createdAt  DateTime    @default(now())
 
-  table      Table     @relation("TableToOrder", fields: [tableId], references: [id]) // 🔹 Relacja zwrotna
+  table      Table       @relation("TableToOrder", fields: [tableId], references: [id])
+  items      OrderItem[] @relation("OrderToOrderItem") // 🔹 Upewnij się, że to jest poprawnie zapisane!
+}
 
-  @@map("orders")
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  name      String
+  price     Float
+  quantity  Int
+
+  order     Order   @relation("OrderToOrderItem", fields: [orderId], references: [id], onDelete: Cascade)
 }
 
 enum Status {

@@ -7,9 +7,13 @@ const prisma = new PrismaClient();
 export async function GET() {
   try {
     const orders = await prisma.order.findMany({
-      include: { table: true },
+      include: {
+        table: { select: { name: true } }, // 🔹 Pobieramy nazwę stolika
+        items: true, // ✅ Pobieramy powiązane pozycje zamówienia
+      },
       orderBy: { createdAt: "desc" },
     });
+
     return NextResponse.json(orders);
   } catch (error) {
     console.error("Błąd pobierania zamówień:", error);
@@ -26,11 +30,21 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Brak wymaganych danych" }, { status: 400 });
     }
 
+    // Tworzymy zamówienie i dodajemy powiązane OrderItem
     const newOrder = await prisma.order.create({
       data: {
         tableId,
-        items,
         totalPrice,
+        items: {
+          create: items.map((item: { name: string; price: number; quantity: number }) => ({
+            name: item.name,
+            price: item.price,
+            quantity: item.quantity,
+          })),
+        },
+      },
+      include: {
+        items: true, // ✅ Teraz Prisma powinna poprawnie pobierać `items`
       },
     });
 
