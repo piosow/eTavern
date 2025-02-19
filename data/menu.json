@@ -1,0 +1,25 @@
+{
+    "categories": [
+      {
+        "name": "Przystawki",
+        "items": [
+          { "id": 1, "name": "Bruschetta", "price": 15.99, "image": "/images/bruschetta.jpg" },
+          { "id": 2, "name": "Carpaccio", "price": 21.99, "image": "/images/carpaccio.jpg" }
+        ]
+      },
+      {
+        "name": "Dania główne",
+        "items": [
+          { "id": 3, "name": "Stek wołowy", "price": 49.99, "image": "/images/steak.jpg" },
+          { "id": 4, "name": "Makaron Carbonara", "price": 34.99, "image": "/images/carbonara.jpg" }
+        ]
+      },
+      {
+        "name": "Desery",
+        "items": [
+          { "id": 5, "name": "Tiramisu", "price": 19.99, "image": "/images/tiramisu.jpg" }
+        ]
+      }
+    ]
+  }
+  
