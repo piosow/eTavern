@@ -10,8 +10,9 @@ datasource db {
 model MenuItem {
   id        Int     @id @default(autoincrement())
   name      String
+  description String @default("Brak opisu")
   price     Float
-  image     String
+  image     String?
   category  String
 }
 model Table {
@@ -43,7 +44,7 @@ model Order {
   createdAt  DateTime    @default(now())
 
   table      Table       @relation("TableToOrder", fields: [tableId], references: [id])
-  items      OrderItem[] @relation("OrderToOrderItem") // 🔹 Upewnij się, że to jest poprawnie zapisane!
+  items      OrderItem[] @relation("OrderToOrderItem") 
 }
 
 model OrderItem {
